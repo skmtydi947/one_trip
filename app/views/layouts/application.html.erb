@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
   <head>
     <title>OneTrip</title>
@@ -8,22 +9,23 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   </head>
 
   <body>
-
+    <% if user_signed_in? %>
     <header>
-      <nav>
-          <% if user_signed_in? %>
-            <strong><%= link_to current_user.username, pages_show_path %></strong>
-            <%= link_to 'プロフィール変更', edit_user_registration_path %>
-            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-          <% else %>
-            <%= link_to 'サインアップ', new_user_registration_path %>
-            <%= link_to 'ログイン', new_user_session_path %>
-          <% end %>
-      </nav>
-    </header>
+        <div><%= link_to root_path do %><img src="/assets/header.png" alt="logo" id="logo"><% end %></div>
+        <div><%= link_to "トップ", root_path, class: "text-white" %></div>
+        <div><%= link_to "投稿する", new_post_path, class: "text-white" %></div>
+        <div><%= link_to "投稿一覧", posts_path, class: "text-white" %></div>
+          <div><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-white" %></div>
+      </header>
+      <% end %>
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
