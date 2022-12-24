@@ -1,3 +1,77 @@
 // Place all the styles related to the posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+// 新規作成
+h1 {
+  font-family: serif;
+}
+
+.cover-new {
+  height: 100%;
+  width: 100%;
+  background-image: url(/assets/new.jpg);
+  background-image: image-url('new.jpg');  background-color:rgba(255,255,255,0.4);
+  background-blend-mode: lighten;
+  background-size: 100% 100%;
+}
+
+.form-label {
+  font-size: 20px;
+  background-color: lightblue;
+}
+
+.form-group {
+  width: 600px;
+}
+
+
+// 投稿一覧
+.cover-index {
+  height: 100%;
+  width: 100%;
+  background-image: url(/assets/index.jpg);
+  background-color: rgba(255, 255, 255, 0.4);
+  background-blend-mode: lighten;
+  background-size: 100% 100%;
+}
+
+.one-post {
+  margin: 5px 30px;
+}
+
+.one-post img:hover {
+  transform: scale(1.2,1.2);
+}
+
+.caption {
+  color: black;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+
+// 投稿詳細
+.cover-show {
+  height: 100%;
+  width: 100%;
+  background-image: url(/assets/show.jpg);
+  background-color: rgba(255, 255, 255, 0.4);
+  background-blend-mode: lighten;
+  background-size: 100% 100%;
+}
+
+#text {
+  font-size: 18px;
+}
+
+
+// 投稿編集
+.cover-edit {
+  height: 100%;
+  width: 100%;
+  background-image: url(/assets/edit.jpg);
+  background-color: rgba(255, 255, 255, 0.4);
+  background-blend-mode: lighten;
+  background-size: 100% 100%;
+}

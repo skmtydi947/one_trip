@@ -18,17 +18,27 @@
 
   <body>
     <% if user_signed_in? %>
-    <header>
-        <div><%= link_to root_path do %><img src="/assets/header.png" alt="logo" id="logo"><% end %></div>
-        <div><%= link_to "トップ", root_path, class: "text-white" %></div>
-        <div><%= link_to "投稿する", new_post_path, class: "text-white" %></div>
-        <div><%= link_to "投稿一覧", posts_path, class: "text-white" %></div>
-          <div><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-white" %></div>
+      <header>
+        <div>
+          <%= link_to root_path do %>
+            <img src="/assets/logo.png" alt="logo" id="logo">
+          <% end %>
+        </div>
+        <div>
+          <%= link_to "トップ", root_path, class: "text-white" %>
+        </div>
+        <div>
+          <%= link_to "投稿する", new_post_path, class: "text-white" %>
+        </div>
+        <div>
+          <%= link_to "投稿一覧", posts_path, class: "text-white" %>
+        </div>
+        <div>
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-white" %>
+        </div>
       </header>
-      <% end %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% end %>
 
     <%= yield %>
   </body>
