@@ -1,5 +1,7 @@
 @import "./homes";
 @import "./posts";
+@import "./users";
+
 
 html,
 body {
@@ -43,4 +45,6 @@ a:hover {
   height: 30px;
 }
 
-
+.profile-img {
+  border-radius: 50%;
+}

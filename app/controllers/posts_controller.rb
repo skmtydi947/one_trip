@@ -6,6 +6,7 @@ class PostsController < ApplicationController
 
   def create
     post = Post.new(post_params)
+    @post.user_id = current_user.id
     if post.save
     redirect_to post_path(post.id)
     end
@@ -13,10 +14,12 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comment = Comment.new
+    @comments = @post.comments.page(params[:page]).per(7).reverse_order
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.page(params[:page]).reverse_order
   end
 
   def edit
