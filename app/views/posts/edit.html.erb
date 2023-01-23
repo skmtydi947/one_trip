@@ -15,7 +15,7 @@
       </div>
       <div class="form-group">
         <label class="form-label">画像</label><br>
-        <%# <%= f.attachment_field :image %> %>
+        <%= f.attachment_field :image %>
       </div>
       <%= f.submit '保存する', class: "btn btn-success" %><br>
       <%= link_to '投稿詳細ページへ', post_path(@post), class: "btn btn-dark mt-3" %>

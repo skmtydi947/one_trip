@@ -8,7 +8,9 @@
       <div class="one-post">
         <%= link_to post_path(post) do %>
         <p class="caption">ユーザ名</p>
-        <%# <%= attachment_image_tag post, :image, format: 'jpeg', size: '300x200' %> %>
+          <% post.post_images.first(1).each do |image| %>
+            <%= attachment_image_tag image, :image, format: 'jpeg', size: '200x133' %>
+          <% end %>
         <p class="caption"><%= post.location %></p>
         <p class="caption"><%= "#{post.comments.count} コメント" %></p>
         <% end %>
