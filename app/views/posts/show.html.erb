@@ -17,17 +17,11 @@
       <% @post.post_images.each do |image| %>
         <%= attachment_image_tag image, :image, format: 'jpeg', size: '200x133' %>
       <% end %>      
-  <p class="caption"><%= @post.location %>
-        <% if current_user && @post.favorited_by?(current_user) %>
-        <%= link_to post_favorites_path(@post), method: :delete, class: "favorite_btn" do %>
-          ♥<%= @post.favorites.count %> いいね
-        <% end %>
-        <% else %>
-          <%= link_to post_favorites_path(@post), method: :post, class: "favorite_btn" do %>
-            ♡<%= @post.favorites.count %> いいね
-        <% end %>
-      <% end %>
-    </p>
+      <p class="caption"><%= @post.location %>
+      <div id="favorite_btn_<%= @post.id %>">
+        <%= render 'favorites/favorite', post: @post %>
+      </div>
+      </p>
       <h2>感想</h2>
       <p id="text"><%= @post.text %></p>
       <% if @post.user == current_user %>
