@@ -3,16 +3,16 @@
     <div class="row justify-content-center">
       <h1 class="font-weight-normal mt-3">旅行新規投稿</h1>
     </div>
-    <% if @post.errors.any? %>
-    <div class="card text-center card text-white bg-danger mb-3">
-      <%= @post.errors.count %>件のエラーが発生しました
-      <% @post.errors.full_messages.each do |message| %>
-      <%= message %>
-      <% end %>
-    </div>
-    <% end %>
     <div class="row justify-content-center">
       <%= form_with model: @post, url:'/posts', local:true do |f| %>
+      <% if @post.errors.any? %>
+        <div class="card text-center card text-white bg-danger mb-3">
+        <%= @post.errors.count %>件のエラーが発生しました
+        <% @post.errors.full_messages.each do |message| %>
+        <%= message %>
+        <% end %>
+        </div>
+      <% end %>
       <div class="form-group">
         <label class="form-label">旅行先</label>
         <%= f.text_field :location, class: "form-control" %>
