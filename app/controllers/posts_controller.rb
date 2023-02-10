@@ -15,6 +15,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    gon.post = @post
     @comment = Comment.new
     @comments = @post.comments.page(params[:page]).per(7).reverse_order
   end
@@ -45,7 +46,7 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:location, :text, post_images_images: []).merge(user_id: current_user.id)
+    params.require(:post).permit(:location, :text, :address, :latitude, :longitude, post_images_images: []).merge(user_id: current_user.id)
 
   end
 

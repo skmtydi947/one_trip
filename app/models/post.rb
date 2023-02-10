@@ -6,6 +6,9 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
+
   validates :location, presence: true, length: { maximum: 15 }
   validates :text, presence: true, length: { maximum: 195 }
   validates :post_images_images, presence: true

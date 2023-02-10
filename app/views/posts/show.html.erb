@@ -31,6 +31,25 @@
       <%= link_to '投稿一覧ページへ', posts_path, class: "btn btn-dark" %>    </div>
 
     <div class="comments ml-5 mt-5">
+
+      <div id = 'map_index'></div>
+        <% google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap" %>
+        <script { async src = google_api }></script>
+
+        <div class="map-route">
+          < ルート検索リスト >
+          <ul id = "route-list" class = "list-group"> 
+        </div>
+
+      <div id = 'directions-panel'> 
+        < 各地点間の距離・時間 >
+        <ul id = "display-list" class = "display-group">
+      </div>
+
+        <div class="map-search">
+          <%= button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick:     "search()" %>
+        </div>
+
         <%= form_with(model:[@post, @comment], local: true) do |f| %>
         <%= f.text_area :comment, :size=>"60x3",placeholder: "コメントする" %>
         <%= f.submit "送信する", class: "btn btn-success mb-4" %>
