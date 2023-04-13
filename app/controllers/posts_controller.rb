@@ -14,6 +14,8 @@ class PostsController < ApplicationController
   end
 
   def show
+    @posts = Post.all
+    gon.posts = @posts
     @post = Post.find(params[:id])
     gon.post = @post
     @comment = Comment.new

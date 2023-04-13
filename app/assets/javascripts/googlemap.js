@@ -3,44 +3,43 @@ var geocoder
 var marker = [];
 var infoWindow = [];
 var markerData = gon.post; // コントローラーで定義したインスタンス変数を変数に代入
-var place_name = [];
-var place_lat = [];
-var place_lng = [];
+var post_name = [];
+var post_lat = [];
+var post_lng = [];
 
 // GoogleMapを表示する関数(callback処理で呼び出される)
 function initMap(){
-    geocoder = new google.maps.Geocoder()
-    // ビューのid='map_index'の部分にGoogleMapを埋め込む
-    map = new google.maps.Map(document.getElementById('map_index'), {
-      center: { lat: 35.6585, lng: 139.7486 }, // 東京タワーを中心
-      zoom: 9,
+  geocoder = new google.maps.Geocoder()
+  // ビューのid='map_index'の部分にGoogleMapを埋め込む
+  map = new google.maps.Map(document.getElementById('map_index'), {
+    center: { lat: markerData.latitude, lng: markerData.longitude }, // 投稿された時の経度・緯度を設定
+    zoom: 9,
+  });
+
+  // 繰り返し処理でマーカーと吹き出しを複数表示させる
+  for (var i = 0; i < markerData.length; i++) {
+    // 各地点の緯度経度を算出
+    markerLatLng = new google.maps.LatLng({
+      lat: markerData[i]['latitude'],
+      lng: markerData[i]['longitude']
     });
 
-    // 繰り返し処理でマーカーと吹き出しを複数表示させる
-    for (var i = 0; i < markerData.length; i++) {
-      // 各地点の緯度経度を算出
-      markerLatLng = new google.maps.LatLng({
-        lat: markerData[i]['latitude'],
-        lng: markerData[i]['longitude']
-      });
+    // マーカーの表示
+    marker[i] = new google.maps.Marker({
+      position: markerLatLng,
+      map: map
+    });
 
-      // マーカーの表示
-      marker[i] = new google.maps.Marker({
-        position: markerLatLng,
-        map: map
-      });
-
-      // 吹き出しの表示
-      let id = markerData[i]['id']
-      place_name[i]= markerData[i]['name'];
-      place_lat[i]= markerData[i]['latitude'];
-      place_lng[i]= markerData[i]['longitude'];
-      infoWindow[i] = new google.maps.InfoWindow({
-        // 吹き出しの中身, 引数で各属性の配列と配列番号を渡す
-        content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
-      });
-      markerEvent(i);
-    }
+    // 吹き出しの表示
+    let id = markerData[i]['id']
+    place_name[i]= markerData[i]['name'];
+    place_lat[i]= markerData[i]['latitude'];
+    place_lng[i]= markerData[i]['longitude'];
+    infoWindow[i] = new google.maps.InfoWindow({
+      // 吹き出しの中身, 引数で各属性の配列と配列番号を渡す
+      content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
+    });
+    markerEvent(i);
   }
 }
 
@@ -139,5 +138,3 @@ function search() {
       });
   }
 }
-
-
