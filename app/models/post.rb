@@ -10,6 +10,7 @@ class Post < ApplicationRecord
   after_validation :geocode, if: :address_changed?
 
   validates :location, presence: true, length: { maximum: 15 }
+  validates :address, presence: true, length: { maximum: 50 }
   validates :text, presence: true, length: { maximum: 195 }
   validates :post_images_images, presence: true
 

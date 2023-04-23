@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-// 新規作成
+// 新規投稿
 h1 {
   font-family: serif;
 }
@@ -14,15 +14,24 @@ h1 {
   background-image: image-url('new.jpg');  background-color:rgba(255,255,255,0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
+  overflow: auto;
 }
 
 .form-label {
   font-size: 20px;
-  background-color: lightblue;
 }
 
 .form-group {
   width: 600px;
+}
+
+.errors {
+  width: 600px;
+}
+
+.errors ul {
+  text-align: center;
+  list-style: none;
 }
 
 
@@ -112,4 +121,15 @@ h1 {
 #map_index{
   height: 400px;
   width: 600px; 
+}
+
+@media screen and (max-width:575px) {
+  // 新規投稿
+  .form-group {
+    width: 300px;
+  }
+
+  .errors {
+    width: 300px;
+  }
 }

@@ -16,33 +16,40 @@ body {
 }
 
 // header
-header {
-  display: flex;
-  background-color: black;
-}
 
-header div:first-child {
-  margin-right: auto;
-}
 
-header div:last-child {
-  margin-right: 30px;
+header nav {
+	background: #000000;
 }
-
-header div {
-  display: inline-block;
-  margin-left: 30px;
-  line-height: 30px;
+nav ul {
+	list-style: none;
+	display: flex;
+	flex-flow: row;
+	margin: 0;
+	padding: 0;
 }
-
-a:hover {
+nav li a {
+  display: block;
+	padding: 0px 30px;
+	text-decoration: none;
+  font-size: 14px;
+  line-height: 50px;
+	color: #ffffff;
+}
+nav li a:hover {
   text-decoration: none;
   font-size: larger;
+}
+nav li.home {
+  margin-right: auto;
+  font-size: larger;
+  font-family: cursive;
 }
 
 #logo {
   width: 60px;
-  height: 30px;
+  height: 60px;
+  margin: 0px 0px 0px 50px;
 }
 
 .profile-img {
@@ -53,3 +60,16 @@ a:hover {
   height: 400px;
   width: 400px; 
 }
+
+@media screen and (min-width:575px) {
+  .bottom-nav {
+    display:none;
+  }
+}
+
+  @media screen and (max-width: 575px){
+    .top-nav {
+      display: none;
+    }
+ }
+  

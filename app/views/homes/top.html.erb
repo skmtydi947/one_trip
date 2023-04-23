@@ -1,10 +1,14 @@
-<div class="cover align-middle">
+<div class="cover">
   <div class="text-center">
-    <h1 class="title mb-2">One Trip</h1>
-    <%= link_to new_user_registration_path do %>
-      <h2 class="btn btn-primary mr-2">新規登録</h2>
-    <% end %>
-    <%= link_to new_user_session_path do %>
-      <h2 class="btn btn-success ml-2">ログイン</h2>
-    <% end %>  </div>
+    <h1 class="title">One Trip</h1>
+    <% if user_signed_in? %>
+    <% else %>
+      <%= link_to new_user_registration_path do %>
+        <h2 class="btn btn-primary mr-2">新規登録</h2>
+      <% end %>
+      <%= link_to new_user_session_path do %>
+        <h2 class="btn btn-success ml-2">ログイン</h2>
+      <% end %>  
+    <% end %>  
+  </div>
 </div>
