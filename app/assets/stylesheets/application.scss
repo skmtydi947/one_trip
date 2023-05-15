@@ -9,6 +9,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  // margin-bottom: 66px;
 }
 
 .profiler-results {
@@ -56,10 +57,10 @@ nav li.home {
   border-radius: 50%;
 }
 
-#map_index{
-  height: 400px;
-  width: 400px; 
-}
+// #map_index{
+//   height: 400px;
+//   width: 400px; 
+// }
 
 @media screen and (min-width:575px) {
   .bottom-nav {
@@ -68,6 +69,11 @@ nav li.home {
 }
 
   @media screen and (max-width: 575px){
+    html,
+    body {
+      margin-bottom: 66px;
+    }
+
     .top-nav {
       display: none;
     }

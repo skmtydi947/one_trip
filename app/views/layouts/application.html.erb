@@ -19,7 +19,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   </head>
 
-  <body>
+<%# ヘッダー・ボトムバー %>
     <% if user_signed_in? %>
       <header>
       <nav class="bottom-nav">
@@ -65,9 +65,9 @@
 	</ul>
 </nav>
       </header>
-
     <% end %>
 
+  <body>
     <%= yield %>
   </body>
 </html>

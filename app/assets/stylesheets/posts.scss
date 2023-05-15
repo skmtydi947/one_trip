@@ -70,12 +70,20 @@ h1 {
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
+  overflow: auto;
 }
 
-#text {
-  font-size: 18px;
+// マップ
+#map_index{
+  height: 400px;
+  width: 380px; 
 }
 
+// ページネーション
+.pagination {
+  justify-content: center;
+  margin: 30px 30px;
+}
 
 // 投稿編集
 .cover-edit {
@@ -85,12 +93,6 @@ h1 {
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
-}
-
-// ページネーション
-.pagination {
-  justify-content: center;
-  margin-top: 30px;
 }
 
 // コメント機能
@@ -103,12 +105,6 @@ h1 {
   margin-left: auto;
 }
 
-// マップ
-#map_index{
-  height: 400px;
-  width: 600px; 
-}
-
 @media screen and (max-width:575px) {
   // 新規投稿
   .form-group {
@@ -117,5 +113,22 @@ h1 {
 
   .errors {
     width: 300px;
+  }
+}
+
+// スマホ
+@media screen and (max-width: 575px){
+  // 投稿詳細
+  .comments {
+    max-width: 80%;
+    display: inline-block;
+  }
+  
+  .map-comments {
+    max-width: 400px;
+  }
+  
+  textarea {
+    max-width: 100%;
   }
 }
