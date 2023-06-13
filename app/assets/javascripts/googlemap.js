@@ -3,7 +3,8 @@ var geocoder
 var marker = [];
 var infoWindow = [];
 var markerData = gon.post; // コントローラーで定義したインスタンス変数を変数に代入
-var post_name = [];
+var spot = gon.posts;
+var post_location = [];
 var post_lat = [];
 var post_lng = [];
 
@@ -16,12 +17,14 @@ function initMap(){
     zoom: 9,
   });
 
+  
+
   // 繰り返し処理でマーカーと吹き出しを複数表示させる
-  for (var i = 0; i < markerData.length; i++) {
+  for (var i = 0; i < spot.length; i++) {
     // 各地点の緯度経度を算出
     markerLatLng = new google.maps.LatLng({
-      lat: markerData[i]['latitude'],
-      lng: markerData[i]['longitude']
+      lat: spot[i]['latitude'],
+      lng: spot[i]['longitude']
     });
 
     // マーカーの表示
@@ -31,13 +34,13 @@ function initMap(){
     });
 
     // 吹き出しの表示
-    let id = markerData[i]['id']
-    place_name[i]= markerData[i]['name'];
-    place_lat[i]= markerData[i]['latitude'];
-    place_lng[i]= markerData[i]['longitude'];
+    let id = spot[i]['id']
+    post_location[i]= spot[i]['location'];
+    post_lat[i]= spot[i]['latitude'];
+    post_lng[i]= spot[i]['longitude'];
     infoWindow[i] = new google.maps.InfoWindow({
       // 吹き出しの中身, 引数で各属性の配列と配列番号を渡す
-      content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
+      content: `<a href='/posts/${ id }'>${ spot[i]['location'] }</a><input type="button" value="追加" onclick="addPost(post_location, post_lat, post_lng, ${i})">`
     });
     markerEvent(i);
   }
@@ -50,10 +53,11 @@ function markerEvent(i) {
   });
 }
 
+
 // リストに追加する
-function addPlace(name, lat, lng, number){
+function addPost(location, lat, lng, number){
   var li = $('<li>', {
-    text: name[number],
+    text: location[number],
     "class": "list-group-item"
   });
   li.attr("data-lat", lat[number]); // data-latという属性にlat[number]を入れる
@@ -128,7 +132,7 @@ function search() {
             for (let i = 0; i < route.legs.length; i++) {
               const routeSegment = i + 1;
               summaryPanel.innerHTML +=
-                "<b>Route Segment: " + routeSegment + "</b><br>";
+                "<b>区間: " + routeSegment + "</b><br>";
               summaryPanel.innerHTML += route.legs[i].start_address + "<br>" + " ↓ " + "<br>";
               summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
               summaryPanel.innerHTML += "<" + route.legs[i].distance.text + ",";

@@ -18,8 +18,6 @@ function initMap(){
     zoom: 9,
   });
 
-  
-
   // 繰り返し処理でマーカーと吹き出しを複数表示させる
   for (var i = 0; i < spot.length; i++) {
     // 各地点の緯度経度を算出
@@ -133,7 +131,7 @@ function search() {
             for (let i = 0; i < route.legs.length; i++) {
               const routeSegment = i + 1;
               summaryPanel.innerHTML +=
-                "<b>Route Segment: " + routeSegment + "</b><br>";
+                "<b>ルート " + routeSegment + "</b><br>";
               summaryPanel.innerHTML += route.legs[i].start_address + "<br>" + " ↓ " + "<br>";
               summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
               summaryPanel.innerHTML += "<" + route.legs[i].distance.text + ",";

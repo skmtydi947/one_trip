@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2023_02_19_190420) do
 
-  create_table "comments", charset: "utf8mb4", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
     t.text "comment"
     t.integer "user_id"
     t.integer "post_id"
@@ -20,14 +23,14 @@ ActiveRecord::Schema.define(version: 2023_02_19_190420) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "favorites", charset: "utf8mb4", force: :cascade do |t|
+  create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
     t.integer "post_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "post_images", charset: "utf8mb4", force: :cascade do |t|
+  create_table "post_images", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.string "image_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 2023_02_19_190420) do
     t.index ["post_id"], name: "index_post_images_on_post_id"
   end
 
-  create_table "posts", charset: "utf8mb4", force: :cascade do |t|
+  create_table "posts", force: :cascade do |t|
     t.string "location"
     t.string "text"
     t.datetime "created_at", precision: 6, null: false
@@ -47,7 +50,7 @@ ActiveRecord::Schema.define(version: 2023_02_19_190420) do
     t.float "longitude"
   end
 
-  create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
+  create_table "relationships", force: :cascade do |t|
     t.bigint "follower_id", null: false
     t.bigint "followed_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -56,7 +59,7 @@ ActiveRecord::Schema.define(version: 2023_02_19_190420) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
