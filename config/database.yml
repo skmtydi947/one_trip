@@ -84,5 +84,5 @@ test:
 production:
   <<: *default
   database: onetrip_db
-  username: onetrip_user
-  password: <%= ENV['ONE_TRIP_DATABASE_PASSWORD'] %>
+  username: <%= ENV['USERNAMEPG'] %>
+  password: <%= ENV['PASSWORD'] %>
