@@ -1,12 +1,12 @@
 databases:
-  - name: One Trip
-    databaseName: onetripdb
-    user: onetripdb_user
+  - name: onetrip
+    databaseName: onetrip
+    user: onetrip_user
     region: singapore
 
 services:
   - type: web
-    name: One Trip
+    name: onetrip
     env: ruby
     region: singapore
     plan: free
@@ -15,7 +15,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: onetripdb
+          name: onetrip
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
