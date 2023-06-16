@@ -82,8 +82,8 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-    <<: *default
-  database: onetrip_db
-  username: onetrip_user
-  password: gi2YqGCPGnecJA6MWCW4F4o50X3K48TP
-  host: dpg-ci56nflgkuvh0tjb8am0-a
+  <<: *default
+  database: one_trip_production
+  username: one_trip
+  password: <%= ENV['ONE_TRIP_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
