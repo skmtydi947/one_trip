@@ -83,6 +83,7 @@ test:
 #
 production:
   <<: *default
-  database: onetrip_db
-  username: <%= ENV['USERNAMEPG'] %>
-  password: <%= ENV['PASSWORD'] %>
+  database: one_trip_production
+  username: one_trip
+  password: <%= ENV['ONE_TRIP_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
