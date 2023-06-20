@@ -82,8 +82,11 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  username: one_trip_user
+  password: <%= ENV['PASSWORD'] %>
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: one_trip_production
-  username: one_trip
-  password: <%= ENV['ONE_TRIP_DATABASE_PASSWORD'] %>
-  url: <%= ENV['DATABASE_URL'] %>
