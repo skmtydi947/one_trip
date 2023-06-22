@@ -40,6 +40,7 @@ h1 {
   height: 100%;
   width: 100%;
   background-image: url(/assets/index.jpg);
+  background-image: image-url('index.jpg'); 
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
