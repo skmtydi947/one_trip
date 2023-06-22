@@ -7,6 +7,7 @@
   height: 100%;
   width: 100%;
   background-image: url(/assets/mypage.jpg);
+  background-image: image-url('mypage.jpg'); 
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
@@ -23,6 +24,7 @@
   height: 100%;
   width: 100%;
   background-image: url(/assets/userindex.jpg);
+  background-image: image-url('userindex.jpg'); 
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
@@ -33,6 +35,7 @@
   height: 100%;
   width: 100%;
   background-image: url(/assets/mypageedit.jpg);
+  background-image: image-url('assets/mypageedit.jpg'); 
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
