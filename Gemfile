@@ -67,4 +67,4 @@ gem 'gon'
 gem 'pry-rails'
 gem 'bootstrap4-kaminari-views'
 gem 'letter_opener_web'
-gem "refile-s3"ÒÒ
+gem "refile-s3"
