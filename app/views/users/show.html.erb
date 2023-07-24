@@ -16,9 +16,9 @@
       </div>
     </p>
     <div class="ml-3 mb-3 card">
-    <div class="d-flex">
+    <div class="d-flex align-items-center">
       <%= attachment_image_tag @user, :profile_image, size: '100x100', fallback: "logo.png", class: "mb-3 profile-img" %>
-      <h4 class="ml-3 mb-3 card w-100"><%= @user.profile %></h4>
+      <h4 class="ml-3 mb-3"><%= @user.profile %></h4>
     </div>
      <div class="d-flex">
      <%= link_to follows_user_path(@user) do %>
