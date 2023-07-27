@@ -25,3 +25,9 @@ sub-title {
   display: table-cell;
   vertical-align: middle;
 }
+
+@media screen and (max-width: 575px){
+  .cover {
+    height: calc(100% + 66px);
+  }
+}

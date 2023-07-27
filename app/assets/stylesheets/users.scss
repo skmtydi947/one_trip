@@ -29,6 +29,7 @@
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
+  overflow: auto;
 }
 
 // マイページ編集
@@ -40,4 +41,11 @@
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 575px){
+  .cover-user-edit, .cover-user-index, .cover-user-show {
+    height: calc(100% + 66px);
+  }
 }
