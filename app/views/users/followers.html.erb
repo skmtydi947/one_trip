@@ -10,13 +10,13 @@
         <p class="caption h4 ml-2"><%= user.name %></p>
         <div class="d-flex">
         <%= attachment_image_tag user, :profile_image, size: '80x80', fallback: "logo.png", class: "profile-img ml-1" %>
-          <h4 class="ml-5"><%= user.profile %></h4>
+          <h4 class="ml-1"><%= user.profile %></h4>
         </div>
         <p class="caption ml-3"><%= "#{user.posts.count} 投稿" %></p>
         <% end %>
       </div>
       <% end %>
     </div>
-    <%= paginate @users %>
+    <%= paginate @users, theme: 'twitter-bootstrap-4' %>
   </div>
 </div>

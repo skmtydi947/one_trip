@@ -5,7 +5,7 @@
     </div>
     <div class="row justify-content-center">
       <% @users.each do |user| %>
-      <div class="one-post card w-100">
+      <div class="one-post card w-100 h-10">
         <%= link_to user_path(user) do %>
         <p class="caption h4 ml-2"><%= user.name %></p>
         <div class="d-flex align-items-center">

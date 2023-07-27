@@ -134,4 +134,9 @@ h1 {
   textarea {
     max-width: 100%;
   }
+
+  .cover-new, .cover-index, .cover-show, .cover-edit {
+    height: calc(100% + 66px);
+  }
+
 }
