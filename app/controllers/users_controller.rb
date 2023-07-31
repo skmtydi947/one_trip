@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
+  before_action :check_guest, only: :edit
 
+  def check_guest
+    @user = User.find(params[:id])
+    if @user.email == 'guest@example.com'
+      redirect_to user_path(@user.id)
+      flash[:notice] = "ゲストユーザーは編集できません。"
+    end
+  end
   # マイページ
   def index
     @users = User.page(params[:page]).per(3).reverse_order
