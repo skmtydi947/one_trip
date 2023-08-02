@@ -64,13 +64,13 @@ nav li.home {
 //   width: 400px; 
 // }
 
-@media screen and (min-width:575px) {
+@media screen and (min-width:718px) {
   .bottom-nav {
     display:none;
   }
 }
 
-  @media screen and (max-width: 575px){
+  @media screen and (max-width: 717px){
     html,
     body {
       padding-bottom: 66px;
