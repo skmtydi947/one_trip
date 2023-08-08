@@ -48,20 +48,24 @@ h1 {
 }
 
 .one-post {
-  margin: 5px 30px;
-}
-
-.one-post img:hover {
-  transform: scale(1.1,1.1);
+  margin: 5px 30px;  
 }
 
 .caption {
   color: black;
   font-size: 20px;
   text-decoration: none;
-  margin: 1px;
+  margin: 3px;
 }
 
+a:hover {
+  text-decoration: none !important;
+}
+
+.count {
+  display: flex;
+  justify-content: right;
+}
 
 // 投稿詳細
 .cover-show {
