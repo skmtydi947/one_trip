@@ -195,7 +195,6 @@ ja:
         comment: 'コメント'
       post_image_image: 
         image: '画像'
-ja:
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>
