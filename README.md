@@ -1,5 +1,6 @@
 <h1 align="center">One Trip</h1>
-<img width="1680" alt="main" src="https://github.com/skmtydi947/one_trip/assets/85802578/88e1e111-1b5a-4650-b963-61758e17d495">
+<img width="1680" alt="main" src="https://github.com/skmtydi947/one_trip/assets/85802578/d958bf39-36a5-43b1-b4a8-b1353e5db09d">
+
 
 # アプリケーションの概要
 - 旅行が趣味という方や最近旅行に行っていない方向けに作成した旅行の思い出を共有するアプリです。
@@ -41,7 +42,7 @@ rails db:migrate
 # 利用方法
 ・トップページからゲストログインをクリックすると投稿一覧画面に遷移します。
 
-![login](https://github.com/skmtydi947/one_trip/assets/85802578/cc372fc0-f611-4fd1-b598-0442f244e67f)
+![login](https://github.com/skmtydi947/one_trip/assets/85802578/12ae5b07-8c1e-4d4d-a0b2-78441ade0774)
 
 ・ヘッダーの投稿するをクリックすると新規投稿画面へ遷移します。
 
@@ -49,28 +50,28 @@ rails db:migrate
 
 ・投稿詳細ページへ遷移します。
 
-![post](https://github.com/skmtydi947/one_trip/assets/85802578/389716e9-2018-4fe7-b3e8-2aab4f79533e)
+![post](https://github.com/skmtydi947/one_trip/assets/85802578/17f0e26a-6d88-41c0-94f9-7b9df6f3c8f3)
 
 ・投稿詳細画面にていいねをすることができます。
 
-![like](https://github.com/skmtydi947/one_trip/assets/85802578/c8a51d5b-0fd0-401c-8cf5-2cd30b9a268c)
+![like](https://github.com/skmtydi947/one_trip/assets/85802578/ff56b2a9-69ba-4f10-90c7-485136bea1cd)
 
 ・投稿詳細画面のMAPピンをクリックすると旅行先名が表示されます。
 
 ・追加をクリックすると、< ルート検索リスト >に追加されルート検索をクリックすると２点間の距離と時間が表示されます。（複数選択可）
 ・マップには経路が描写されます。
 
-![route](https://github.com/skmtydi947/one_trip/assets/85802578/700d8f92-f1aa-40c0-af2a-64edbf3a167a)
+![route](https://github.com/skmtydi947/one_trip/assets/85802578/25326ad5-abda-4d43-ad2b-ae6f4b62b105)
 
 ・メッセージを入力して送信するをクリックするとコメントできます。
 
 ・削除をクリックすることで削除できます。
 
-![comment](https://github.com/skmtydi947/one_trip/assets/85802578/1bede95b-c9ca-4a7b-b15d-5045c95fd782)
+![comment](https://github.com/skmtydi947/one_trip/assets/85802578/4c58c678-2ff3-4dcf-971e-d45ca87e89c2)
 
 ・ユーザー詳細ページでユーザーのフォローができます。
 
-![follow](https://github.com/skmtydi947/one_trip/assets/85802578/88206db7-112d-4467-9b38-f2e83c9df3bb)
+![follow](https://github.com/skmtydi947/one_trip/assets/85802578/95466907-0e00-4d8a-8e9a-5a43f749d20f)
 
 # 制作背景
 ## 開発の意図
@@ -109,6 +110,7 @@ rails db:migrate
 |レスポンシブデザイン|スマートフォン向けにボトムナビゲーションバーを表示します|
 
 # DB設定
-<img width="807" alt="er" src="https://github.com/skmtydi947/one_trip/assets/85802578/11b04b11-0bcc-4c3b-aff4-b0b953ad3111">
+<img width="807" alt="er" src="https://github.com/skmtydi947/one_trip/assets/85802578/0bb90204-f93c-4d04-99ce-821dab3a8d89">
+
 
 
