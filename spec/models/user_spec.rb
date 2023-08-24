@@ -26,7 +26,7 @@ RSpec.describe User, type: :model do
   it 'emailに@がないと登録できない' do
     @user.email = 'testexample.com'
     @user.valid?
-    expect(@user.errors.full_messages).to include('Eメールは不正な値です')
+    expect(@user.errors.full_messages).to include('Eメールには＠を含めてください')
   end
 
   it 'emailが重複していると登録できない' do
