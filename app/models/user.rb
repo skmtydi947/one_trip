@@ -4,6 +4,11 @@ class User < ApplicationRecord
 
   attachment :profile_image
   validates :name, presence: true
+  validates :email, presence: true, uniqueness: true, allow_blank: true,  user_email: true
+  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+  validates :password, length: { minimum: 6, allow_blank: true }, allow_blank: true,  presence: true, format: { with: VALID_PASSWORD_REGEX }
+  validates :password_confirmation, presence: true, allow_blank: true
+
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
