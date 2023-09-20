@@ -9,7 +9,8 @@
     </div>
     <p class="d-flex justify-content-end">
       <% if user_signed_in? && @user == current_user %>
-      <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn-sm btn-success" %>
+      <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn-sm btn-success mr-3" %>
+      <%= link_to "退会する", user_path(current_user.id), class: "btn-sm btn-danger", method: :delete, "data-confirm" => "本当に退会しますか？" %>
       <% end %>
       <div id="relationship_btn_<%= @user.id %>">
         <%= render "relationships/relationship", user: @user %>
