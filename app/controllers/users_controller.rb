@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-  before_action :check_guest, only: :edit
+  before_action :check_guest, only: %i[edit destroy]
 
   def check_guest
     @user = User.find(params[:id])
     if @user.email == 'guest@example.com'
       redirect_to user_path(@user.id)
-      flash[:notice] = "ゲストユーザーは編集できません。"
+      flash[:notice] = "ゲストユーザーは編集・退会できません。"
     end
   end
   # マイページ
@@ -32,6 +32,12 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to :root
   end
 
   # フォロー機能
