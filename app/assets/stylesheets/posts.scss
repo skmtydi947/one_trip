@@ -62,6 +62,12 @@ h1 {
   margin: 3px;
 }
 
+.caption a {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 200;
+}
+
 a:hover {
   text-decoration: none !important;
 }
@@ -104,6 +110,7 @@ a:hover {
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
+  overflow: auto;
 }
 
 // コメント機能
