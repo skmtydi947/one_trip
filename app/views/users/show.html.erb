@@ -4,7 +4,7 @@
       <% if user_signed_in? && @user == current_user %>
       <h1 class="font-weight-normal mt-5 mb-5">マイページ</h1>
       <% else %>
-      <h1 class="font-weight-normal mt-5 mb-5"><%= @user.name %>さんのページ</h1>
+      <h1 class="font-weight-normal mt-5 mb-5"><%= @user.name %></h1>
       <% end %>
     </div>
     <p class="d-flex justify-content-end">
@@ -17,29 +17,32 @@
       </div>
     </p>
     <div class="ml-3 mb-3 card">
-    <div class="d-flex">
-      <%= attachment_image_tag @user, :profile_image, size: '100x100', fallback: "logo.png", class: "mb-3 profile-img" %>
-      <h4 class="ml-3 mb-3"><%= @user.profile %></h4>
-    </div>
-     <div class="d-flex" id="relationship_count">
-      <%= render "relationships/relationship_count", {user: @user, following_users: @following_users, follower_users: @follower_users} %>
-    </div>
+      <div class="d-flex">
+        <%= attachment_image_tag @user, :profile_image, size: '100x100', fallback: "logo.png", class: "mb-3 profile-img" %>
+        <h4 class="ml-3 mb-3"><%= @user.profile %></h4>
+      </div>
+      <div class="d-flex" id="relationship_count">
+        <%= render "relationships/relationship_count", {user: @user, following_users: @following_users, follower_users: @follower_users} %>
+      </div>
     </div>
     <div class="row justify-content-center">
       <% @posts.each do |post| %>
-        <%= link_to post_path(post) do %>
-        <div class="one-post mt-3 card">
-            <p class="caption"><%= post.location %></p>
-            <% post.post_images.first(1).each do |image| %>
-            <%= attachment_image_tag image, :image, format: 'jpeg', size: '200x133' %>
-            <% end %>
-            <p class="caption "><%= post.user.name %></p> 
-            <div class="count">
-            <p class="caption"><%= "♥#{post.favorites.count}" %></p>
-            <p class="caption"><i class="fa-regular fa-comment"></i><%= "#{post.comments.count}" %></p>
-            </div>
-          <% end %>
+      <%= link_to post_path(post) do %>
+      <div class="one-post mt-3 card">
+        <p class="caption"><%= post.location %></p>
+        <% post.post_images.first(1).each do |image| %>
+        <%= attachment_image_tag image, :image, format: 'jpeg', size: '200x133' %>
+        <% end %>
+        <p class="caption ">
+          <%= attachment_image_tag post.user, :profile_image, format: 'jpeg', fallback: "logo.png", size: '30x30', class: "rounded-circle" %>
+          <%= post.user.name %>
+        </p>
+        <div class="count">
+          <p class="caption"><%= "♥#{post.favorites.count}" %></p>
+          <p class="caption"><i class="fa-regular fa-comment"></i><%= "#{post.comments.count}" %></p>
         </div>
+        <% end %>
+      </div>
       <% end %>
     </div>
     <%= paginate @posts, theme: 'twitter-bootstrap-4' %>

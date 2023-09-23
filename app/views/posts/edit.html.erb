@@ -4,12 +4,12 @@
       <h1 class="font-weight-normal mt-5 mb-5">旅行投稿編集</h1>
     </div>
     <% if @post.errors.any? %>
-      <div class="card text-center card text-white bg-danger mb-3">
-        <%= @post.errors.count %>件のエラーが発生しました
-        <% @post.errors.full_messages.each do |message| %>
-          <%= message %>
-        <% end %>
-      </div>
+    <div class="card text-center card text-white bg-danger mb-3">
+      <%= @post.errors.count %>件のエラーが発生しました
+      <% @post.errors.full_messages.each do |message| %>
+      <%= message %>
+      <% end %>
+    </div>
     <% end %>
     <div class="row justify-content-center">
       <%= form_with model: @post, url:"/posts/#{@post.id}", local:true do |f| %>
@@ -27,6 +27,9 @@
       </div>
       <div class="form-group">
         <label class="form-label">画像</label><br>
+        <% @post.post_images.each do |image| %>
+        <%= attachment_image_tag image, :image, format: 'jpeg', size: '190x133' %>
+        <% end %>
         <%= f.attachment_field :post_images_images, multiple: true %>
       </div>
       <%= f.submit '保存する', class: "btn btn-success" %><br>
