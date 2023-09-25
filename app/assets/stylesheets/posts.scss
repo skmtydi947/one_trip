@@ -11,7 +11,8 @@ h1 {
   height: 100%;
   width: 100%;
   background-image: url(/assets/new.jpg);
-  background-image: image-url('new.jpg');  background-color:rgba(255,255,255,0.4);
+  background-image: image-url('new.jpg');
+  background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
   overflow: auto;
@@ -44,7 +45,7 @@ h1 {
   height: 100%;
   width: 100%;
   background-image: url(/assets/index.jpg);
-  background-image: image-url('index.jpg'); 
+  background-image: image-url('index.jpg');
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
@@ -52,7 +53,7 @@ h1 {
 }
 
 .one-post {
-  margin: 5px 30px;  
+  margin: 5px 30px;
 }
 
 .caption {
@@ -82,17 +83,32 @@ a:hover {
   height: 100%;
   width: 100%;
   background-image: url(/assets/show.jpg);
-  background-image: image-url('show.jpg'); 
-  background-color:rgba(255,255,255,0.4);
+  background-image: image-url('show.jpg');
+  background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
   overflow: auto;
 }
 
+.list-group-item {
+  width: 380px;
+}
+
+#directions-panel {
+  max-width: 380px;
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  word-wrap: break-word;
+  background-color: white;
+}
+
 // マップ
-#map_index{
+#map_index {
   height: 400px;
-  width: 380px; 
+  width: 380px;
 }
 
 // ページネーション
@@ -106,7 +122,7 @@ a:hover {
   height: 100%;
   width: 100%;
   background-image: url(/assets/edit.jpg);
-  background-image: image-url('edit.jpg'); 
+  background-image: image-url('edit.jpg');
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
@@ -124,6 +140,7 @@ a:hover {
 }
 
 @media screen and (max-width:575px) {
+
   // 新規投稿
   .form-group {
     width: 300px;
@@ -135,22 +152,26 @@ a:hover {
 }
 
 // スマホ
-@media screen and (max-width: 717px){
+@media screen and (max-width: 717px) {
+
   // 投稿詳細
   .comments {
     max-width: 80%;
     display: inline-block;
   }
-  
+
   .map-comments {
     max-width: 400px;
   }
-  
+
   textarea {
     max-width: 100%;
   }
 
-  .cover-new, .cover-index, .cover-show, .cover-edit {
+  .cover-new,
+  .cover-index,
+  .cover-show,
+  .cover-edit {
     height: calc(100% + 66px);
   }
 
