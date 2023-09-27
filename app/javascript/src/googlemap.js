@@ -11,6 +11,7 @@ var currentLocationMarker; // 現在地のマーカー
 
 // GoogleMapを表示
 function initMap() {
+  console.log(hoge)
   geocoder = new google.maps.Geocoder();
 
   // ビューのid='map_index'にGoogleMapを埋め込み
