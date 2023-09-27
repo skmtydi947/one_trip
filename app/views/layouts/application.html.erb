@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html>
+
   <head>
     <title>OneTrip</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,64 +9,68 @@
     <%= csp_meta_tag %>
     <%= include_gon %>
 
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" />
+
     <script src="https://kit.fontawesome.com/d40f72d351.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
   </head>
 
-<%# ヘッダー・ボトムバー %>
-    <% if user_signed_in? %>
-      <header>
-      <nav class="bottom-nav">
+  <%# ヘッダー・ボトムバー %>
+  <% if user_signed_in? %>
+  <header>
+    <nav class="bottom-nav">
       <ul class="fixed-bottom w-100 shadow-lg list-unstyled list-group list-group-horizontal text-center">
-      <button class="mx-auto list-group-item list-group-item-action">
-        <%= link_to new_post_path do %>
-         <p><i class="fa-solid fa-pen-to-square fa-2xl"></i></p>
-        <% end %>
-      </button>
-      <button class="mx-auto list-group-item list-group-item-action">
-        <%= link_to posts_path do %>
-        <p><i class="fa-solid fa-table-cells fa-2xl" style="color: #005eff;"></i></p>
-        <% end %>
-      </button>
-      <button class="mx-auto list-group-item list-group-item-action">
-        <%= link_to users_path do %>
-        <p><i class="fa-solid fa-users fa-2xl" style="color: #005eff;"></i><p>
-        <% end %>
-      </button>
-      <button class="mx-auto list-group-item list-group-item-action">
-        <%= link_to user_path(current_user.id) do %>
-        <p><i class="fa-solid fa-user fa-2xl" style="color: #005eff;"></i></p>
-        <% end %>
-      </button>
-            <button class="mx-auto list-group-item list-group-item-action">
-        <%= link_to destroy_user_session_path, method: :delete do %>
-        <p><i class="fa-solid fa-right-from-bracket fa-2xl" style="color: #005eff;"></i></p>
-        <% end %>
-      </button>     
-    </ul>
+        <button class="mx-auto list-group-item list-group-item-action">
+          <%= link_to new_post_path do %>
+          <p><i class="fa-solid fa-pen-to-square fa-2xl"></i></p>
+          <% end %>
+        </button>
+        <button class="mx-auto list-group-item list-group-item-action">
+          <%= link_to posts_path do %>
+          <p><i class="fa-solid fa-table-cells fa-2xl" style="color: #005eff;"></i></p>
+          <% end %>
+        </button>
+        <button class="mx-auto list-group-item list-group-item-action">
+          <%= link_to users_path do %>
+          <p><i class="fa-solid fa-users fa-2xl" style="color: #005eff;"></i>
+            <p>
+              <% end %>
+        </button>
+        <button class="mx-auto list-group-item list-group-item-action">
+          <%= link_to user_path(current_user.id) do %>
+          <p><i class="fa-solid fa-user fa-2xl" style="color: #005eff;"></i></p>
+          <% end %>
+        </button>
+        <button class="mx-auto list-group-item list-group-item-action">
+          <%= link_to destroy_user_session_path, method: :delete do %>
+          <p><i class="fa-solid fa-right-from-bracket fa-2xl" style="color: #005eff;"></i></p>
+          <% end %>
+        </button>
+      </ul>
     </nav>
 
 
 
-      <nav class="top-nav">
-	<ul>
-		<li class="home"><%= link_to "One Trip", root_path, class: "text-white" %></li>
-		<li><%= link_to "投稿する", new_post_path, class: "text-white" %></li>
-		<li><%= link_to "投稿一覧", posts_path, class: "text-white" %></li>
-		<li><%= link_to "ユーザー", users_path, class: "text-white" %></li>
-		<li><%= link_to "マイページ", user_path(current_user.id), class: "text-white" %></li>
-    <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-white" %></li>
-	</ul>
-</nav>
-      </header>
-    <% end %>
+    <nav class="top-nav">
+      <ul>
+        <li class="home"><%= link_to "One Trip", root_path, class: "text-white" %></li>
+        <li><%= link_to "投稿する", new_post_path, class: "text-white" %></li>
+        <li><%= link_to "投稿一覧", posts_path, class: "text-white" %></li>
+        <li><%= link_to "ユーザー", users_path, class: "text-white" %></li>
+        <li><%= link_to "マイページ", user_path(current_user.id), class: "text-white" %></li>
+        <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-white" %></li>
+      </ul>
+    </nav>
+  </header>
+  <% end %>
 
   <body>
     <div class="flash">
@@ -74,4 +79,5 @@
 
     <%= yield %>
   </body>
+
 </html>

@@ -105,6 +105,21 @@ a:hover {
   background-color: white;
 }
 
+.main-slider {
+  width: auto;
+  max-width: 700px;
+}
+
+.thumbnail-slider {
+  height: 100px;
+  width: auto;
+}
+
+.slick-slider {
+  margin: 0 auto;
+  width: auto;
+}
+
 // マップ
 #map_index {
   height: 400px;
@@ -175,4 +190,23 @@ a:hover {
     height: calc(100% + 66px);
   }
 
+  .main-slider {
+    width: auto;
+    max-width: 300px;
+  }
+  
+  .thumbnail-slider {
+    height: auto;
+    width: 200px;
+  }
+  
+  .slick-slider {
+    margin: 0 auto;
+    width: auto;
+  }
+
+  .slick-list {
+    max-width: 390px;
+  }
+  
 }
