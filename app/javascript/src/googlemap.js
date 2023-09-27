@@ -1,3 +1,4 @@
+var map;
 var geocoder;
 var marker = [];
 var infoWindow = [];
@@ -12,8 +13,6 @@ var currentLocationMarker; // 現在地のマーカー
 function initMap() {
   console.log(hoge)
   geocoder = new google.maps.Geocoder();
-
-
 
   // ビューのid='map_index'にGoogleMapを埋め込み
   map = new google.maps.Map(document.getElementById('map_index'), {
