@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, allow_blank: true,  user_email: true
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-  validates :password, length: { minimum: 6, allow_blank: true }, allow_blank: true,  presence: true, format: { with: VALID_PASSWORD_REGEX }
+  validates :password, length: { minimum: 6, allow_blank: true }, allow_blank: true,  presence: true, format: { with: VALID_PASSWORD_REGEX, message: "は英数字を含めてください。" }
   validates :password_confirmation, presence: true, allow_blank: true
 
 

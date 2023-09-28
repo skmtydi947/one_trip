@@ -4,12 +4,24 @@
 body, html {
   height: 100%;
 }
+
 body {
   font-family: 'Open Sans';
   font-weight: 100;
   display: flex;
   overflow: hidden;
 }
+
+#error_explanation {
+  max-width: 300px;
+  text-align: center;
+}
+
+#error_explanation ul {
+  list-style: none;
+  padding: 0;
+}
+
 input {
   ::-webkit-input-placeholder {
      color: rgba(255,255,255,0.7);
@@ -35,12 +47,11 @@ input {
 }
 
 .login-form {
-  //background: #222;
-  //box-shadow: 0 0 1rem rgba(0,0,0,0.3);
   min-height: 10rem;
   margin: auto;
   max-width: 100%;
   padding: .5rem;
+  text-align: center;
 }
 
 .login-username, .login-email, .login-password {
@@ -61,7 +72,6 @@ input {
 }
 
 .login-forgot-pass {
-  //border-bottom: 1px solid white;
   bottom: 0;
   color: white;
   cursor: pointer;
@@ -72,30 +82,11 @@ input {
   padding: .5rem;
   position: absolute;
   text-align: center;
-  //text-decoration: none;
   width: 100%;
   &:hover {
     opacity: 1;
   }
 }
-.login-submit {
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  display: block;
-  margin: 1rem auto;
-  min-width: 1px;
-  padding: .25rem;
-  transition: 250ms background ease-in;
-  &:hover, &:focus {
-    background: white;
-    color: black;
-    transition: 250ms background ease-in;
-  }
-}
-
-
-
 
 [class*=underlay] {
   left: 0;
@@ -104,25 +95,15 @@ input {
   position: fixed;
   top: 0;
 }
+
 .underlay-photo {
   background-image: url(/assets/signup.jpg);
   background-image: image-url('signup.jpg'); 
   background-color:rgba(255,255,255,0.4);
   background-blend-mode:lighten;
   background-size: cover;
-  // -webkit-filter: grayscale(30%);
   z-index: -1;
 }
 .underlay-black {
-  // background: rgba(0,0,0,0.7);
   z-index: -1;
-}
-
-@keyframes hue-rotate {
-  from {
-    // -webkit-filter: grayscale(30%) hue-rotate(0deg);
-  }
-  to {
-    // -webkit-filter: grayscale(30%) hue-rotate(360deg);
-  }
 }
