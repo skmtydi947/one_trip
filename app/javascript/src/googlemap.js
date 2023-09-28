@@ -1,13 +1,13 @@
-var map;
-var geocoder;
-var marker = [];
-var infoWindow = [];
-var spot = gon.post; // postsコントローラーから現在表示されている投稿のデータを格納
-var spots = gon.posts; // postsコントローラーからスポットのデータを格納
-var spots_location = []; // スポットの場所を格納する配列
-var spots_lat = []; // スポットの緯度を格納する配列
-var spots_lng = []; // スポットの経度を格納する配列
-var currentLocationMarker; // 現在地のマーカー
+let map;
+let geocoder;
+const marker = [];
+const infoWindow = [];
+const spot = gon.post; // postsコントローラーから現在表示されている投稿のデータを格納
+const spots = gon.posts; // postsコントローラーからスポットのデータを格納
+const spots_location = []; // スポットの場所を格納する配列
+const spots_lat = []; // スポットの緯度を格納する配列
+const spots_lng = []; // スポットの経度を格納する配列
+let currentLocationMarker; // 現在地のマーカー
 
 // GoogleMapを表示
 function initMap() {
@@ -24,8 +24,8 @@ function initMap() {
   });
 
   // スポットの数分繰り返し処理を行いマップ上表示
-  for (var i = 0; i < spots.length; i++) {
-    markerLatLng = new google.maps.LatLng({
+  for (let i = 0; i < spots.length; i++) {
+    const markerLatLng = new google.maps.LatLng({
       lat: spots[i]['latitude'],
       lng: spots[i]['longitude']
     });
@@ -58,21 +58,20 @@ function markerEvent(i) {
 }
 
 // 現在地を取得しマーカーを追加、ボタンにクリックイベントを追加
-var currentLocationButton = document.getElementById('current-location-button');
+const currentLocationButton = document.getElementById('current-location-button');
 currentLocationButton.addEventListener('click', getCurrentLocationAndAddMarker);
 
-var customMarkerIcon = {
+const customMarkerIcon = {
   fillColor: 'red', // 塗りつぶしの色を赤に設定
   fillOpacity: 1, // 塗りつぶしの不透明度を設定
   scale: 10, // マーカーアイコンのサイズを設定
 };
 
-
 // 現在地を取得しマーカーを追加
 function getCurrentLocationAndAddMarker() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      var currentLatLng = {
+      const currentLatLng = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
@@ -89,7 +88,7 @@ function getCurrentLocationAndAddMarker() {
 
       // マーカーをクリック時、情報ウィンドウを表示
       currentLocationMarker.addListener('click', function () {
-        var contentString = "現在の位置";
+        const contentString = "現在の位置";
         contentString += `<input type="button" value="追加" onclick="addPost(['現在置'], [${currentLatLng.lat}], [${currentLatLng.lng}], -1)">`;
 
         infoWindow[infoWindow.length] = new google.maps.InfoWindow({
@@ -108,7 +107,7 @@ function getCurrentLocationAndAddMarker() {
 // 検索リストにスポットを追加
 function addPost(location, lat, lng, number) {
   // <li>要素作成
-  var li = document.createElement('li');
+  const li = document.createElement('li');
 
   if (number === -1) {
     // 現在地情報の場合
@@ -130,25 +129,25 @@ function addPost(location, lat, lng, number) {
   }
 
   // id が route-list の要素の末尾に <li> 要素を追加
-  var routeList = document.getElementById('route-list');
+  const routeList = document.getElementById('route-list');
   routeList.appendChild(li);
 }
 
 // ドロップダウンメニューで移動方法を選択できる
-var travelModeSelector = document.getElementById('travel-mode-selector');
+const travelModeSelector = document.getElementById('travel-mode-selector');
 
 // ルートを検索
 function search() {
 
-  var points = $('#route-list li');
+  const points = $('#route-list li');
 
   // 2つ以上の地点が選択された場合
   if (points.length >= 2) {
-    var origin;
-    var destination;
-    var waypoints = [];
+    let origin;
+    let destination;
+    const waypoints = [];
 
-    for (var i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length; i++) {
       points[i] = new google.maps.LatLng($(points[i]).attr("data-lat"), $(points[i]).attr("data-lng"));
       if (i == 0) {
         origin = points[i];
@@ -163,10 +162,10 @@ function search() {
     }
 
     // 選択された移動方法を取得
-    var selectedTravelMode = travelModeSelector.value;
+    const selectedTravelMode = travelModeSelector.value;
 
     // ルート検索のリクエストを作成
-    var request = {
+    const request = {
       origin: origin,
       destination: destination,
       waypoints: waypoints,
