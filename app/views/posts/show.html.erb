@@ -130,7 +130,7 @@
         lat: spot.latitude,
         lng: spot.longitude
       },
-      zoom: 14,
+      zoom: 16,
     });
 
     // スポットの数分繰り返し処理を行いマップ上表示
@@ -239,8 +239,8 @@
     if (service) {
       const request = {
         location: location,
-        radius: 1000,
-        types: ['lodging'] // ホテルを検索
+        radius: 300,
+        types: ['cafe'] // カフェを検索
       };
 
       service.nearbySearch(request, function (results, status) {
@@ -259,7 +259,7 @@
   function createMarker(place) {
     const placeLoc = place.geometry.location;
 
-    const customIconUrl = '/assets/hotel.png';
+const customIconUrl = '<%= asset_path("cafe32.png") %>';
     const marker = new google.maps.Marker({
       map: map,
       position: placeLoc,
