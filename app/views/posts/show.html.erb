@@ -50,8 +50,6 @@
           <%= render 'favorites/favorite', post: @post %>
         </div>
 
-        <%# </p> %>
-
         <div class="text ml-1">
           <h2>感想</h2>
           <p id="text"><%= @post.text %></p>
@@ -63,23 +61,21 @@
             <select id="travel-mode-selector">
               <option value="WALKING">徒歩</option>
               <option value="DRIVING">車</option>
-              <option value="TRANSIT">公共交通機関</option>
+              <%# <option value="TRANSIT">公共交通機関</option> %>
             </select>
-
+            <button class="mt-2 ml-3" onclick="resetRoute()">検索結果とリストをリセット</button>
+            <div class="map-search mx-3 mt-2">
+              <button id="current-location-button" class="btn btn-primary">現在地を取得する</button>
+              <%= button_tag "ルートを検索する", id: "btn-search", class: "btn btn-primary ml-3", onclick: "search()" %>
+            </div>
             <div class="map-route">
               < ルート検索リスト>
                 <ul id="route-list" class="list-group">
             </div>
-
-            <div id='directions-panel'>
-              < 各地点間の距離・時間>
+            < 各地点間の距離・時間>
+              <div id='directions-panel'>
                 <ul id="display-list" class="display-group">
-            </div>
-
-            <div class="map-search">
-              <button id="current-location-button" class="btn btn-primary">現在地を取得する</button>
-              <%= button_tag "ルートを検索する", id: "btn-search", class: "btn btn-primary", onclick: "search()" %>
-            </div>
+              </div>
           </div>
 
           <div class="comments ml-5 col-xs-6">
@@ -89,13 +85,12 @@
             <% end %>
             <p>コメント件数：<%= @comments.count %></p>
             <% @comments.each do |comment| %>
-
-            <div class="comments-index mb-2">
+            <div class="row comments-index mb-2">
               <%= comment.user.name %>
               <%= comment.created_at.strftime('%Y/%m/%d') %><br>
               <%= comment.comment %>
               <% if comment.user == current_user %>
-              <div class="comment-delete">
+              <div class="comment-delete mt-4">
                 <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete, class: "btn-sm btn-danger" %>
                 <% end %>
               </div>
@@ -110,10 +105,16 @@
 </div>
 
 <script>
+  // document.addEventListener('DOMContentLoaded', function () {
+  //   document.body.setAttribute('data-turbolinks', 'false');
+  // });
+
   let map;
+  let service;
   let geocoder;
   let marker = [];
-  let infoWindow = [];
+  let infoWindow = null; // InfoWindowのインスタンスを格納
+  let directionsRenderer = null; // DirectionsRendererのインスタンスを格納
   const spot = gon.post; // postsコントローラーから現在表示されている投稿のデータを格納
   const spots = gon.posts; // postsコントローラーからスポットのデータを格納
   const spots_location = []; // スポットの場所を格納する配列
@@ -124,14 +125,12 @@
   // GoogleMapを表示
   function initMap() {
     geocoder = new google.maps.Geocoder();
-
-    // ビューのid='map_index'にGoogleMapを埋め込み
     map = new google.maps.Map(document.getElementById('map_index'), {
       center: {
         lat: spot.latitude,
         lng: spot.longitude
       },
-      zoom: 9,
+      zoom: 14,
     });
 
     // スポットの数分繰り返し処理を行いマップ上表示
@@ -152,31 +151,26 @@
       spots_location[i] = spots[i]['location'];
       spots_lat[i] = spots[i]['latitude'];
       spots_lng[i] = spots[i]['longitude'];
-      infoWindow[i] = new google.maps.InfoWindow({
-        // 吹き出しの中身を設定し、ボタンを追加
-        content: `<a href='/posts/${id}'>${spots[i]['location']}</a><input type="button" value="追加" onclick="addPost(spots_location, spots_lat, spots_lng, ${i})">`
+      infoWindow = new google.maps.InfoWindow();
+
+      // 吹き出しをクリックしたときの処理（中身を設定し、ボタンを追加）
+      google.maps.event.addListener(marker[i], 'click', function () {
+        infoWindow.setContent(
+          `<a href='/posts/${id}'>${spots[i]['location']}</a><button onclick="addPost(${i})">追加</button>`);
+        infoWindow.open(map, marker[i]);
       });
-
-      markerEvent(i);
     }
-  }
 
-  // マーカーをクリック時情報ウィンドウを表示
-  function markerEvent(i) {
-    marker[i].addListener('click', function () {
-      infoWindow[i].open(map, marker[i]);
+    // 周辺の観光地とホテルを検索
+    searchPlaces({
+      lat: spot.latitude,
+      lng: spot.longitude
     });
   }
 
   // 現在地を取得しマーカーを追加、ボタンにクリックイベントを追加
   const currentLocationButton = document.getElementById('current-location-button');
   currentLocationButton.addEventListener('click', getCurrentLocationAndAddMarker);
-
-  const customMarkerIcon = {
-    fillColor: 'red',
-    fillOpacity: 1,
-    scale: 10,
-  };
 
   // 現在地を取得しマーカーを追加
   function getCurrentLocationAndAddMarker() {
@@ -188,7 +182,6 @@
         };
 
         if (currentLocationMarker) {
-          // 現在地マーカーがすでに存在する場合削除する
           currentLocationMarker.setMap(null);
         }
         currentLocationMarker = new google.maps.Marker({
@@ -197,19 +190,16 @@
           title: "現在地"
         });
 
-        // マーカーをクリック時、情報ウィンドウを表示
         currentLocationMarker.addListener('click', function () {
-          let contentString = "現在の位置";
-          contentString +=
-            `<input type="button" value="追加" onclick="addPost(['現在置'], [${currentLatLng.lat}], [${currentLatLng.lng}], -1)">`;
-
-          infoWindow[infoWindow.length] = new google.maps.InfoWindow({
-            content: contentString
-          });
-          infoWindow[infoWindow.length - 1].open(map, currentLocationMarker);
+          infoWindow.setContent(
+            `<strong> 現在地 </strong><button onclick="addPost(-1)">追加</button>`
+          );
+          infoWindow.open(map, currentLocationMarker);
         });
 
+        // 周辺の観光地とホテルを検索
         map.setCenter(currentLatLng);
+        searchPlaces(currentLatLng);
       });
     } else {
       alert("このブラウザでは位置情報が利用できません");
@@ -217,43 +207,147 @@
   }
 
   // 検索リストにスポットを追加
-  function addPost(location, lat, lng, number) {
-    // <li>要素作成
+  function addPost(number) {
     const li = document.createElement('li');
-
     if (number === -1) {
-      // 現在地情報の場合
-      li.textContent = location;
+      li.textContent = "現在置";
     } else {
-      li.textContent = location[number];
+      li.textContent = spots_location[number];
     }
 
     li.className = "list-group-item";
 
+    // li要素にdata-lat,lngのデータ属性を追加
     if (number === -1) {
-      // 現在地情報の場合
-      li.setAttribute("data-lat", lat);
-      li.setAttribute("data-lng", lng);
+      li.setAttribute("data-lat", currentLocationMarker.getPosition().lat());
+      li.setAttribute("data-lng", currentLocationMarker.getPosition().lng());
     } else {
-      // スポットの場合
-      li.setAttribute("data-lat", lat[number]);
-      li.setAttribute("data-lng", lng[number]);
+      li.setAttribute("data-lat", spots_lat[number]);
+      li.setAttribute("data-lng", spots_lng[number]);
     }
 
-    // id が route-list の要素の末尾に <li> 要素を追加
     const routeList = document.getElementById('route-list');
     routeList.appendChild(li);
+
+    infoWindow.close();
   }
 
-  // ドロップダウンメニューで移動方法を選択できる
-  const travelModeSelector = document.getElementById('travel-mode-selector');
+  // Places APIを使用して周辺の観光地とホテルを検索
+  function searchPlaces(location) {
+    service = new google.maps.places.PlacesService(map);
+
+    if (service) {
+      const request = {
+        location: location,
+        radius: 1000,
+        types: ['lodging'] // ホテルを検索
+      };
+
+      service.nearbySearch(request, function (results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (let i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
+        }
+      });
+    } else {
+      console.error('PlacesService is not available.');
+    }
+  }
+
+  // Places APIの検索結果に基づいてマーカーを作成
+  function createMarker(place) {
+    const placeLoc = place.geometry.location;
+
+    const customIconUrl = '/assets/hotel.png';
+    const marker = new google.maps.Marker({
+      map: map,
+      position: placeLoc,
+      icon: customIconUrl
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+      // Places APIの詳細情報を取得
+      const request = {
+        placeId: place.place_id,
+        fields: ['name', 'formatted_address', 'formatted_phone_number', 'website', 'rating', 'opening_hours',
+          'photos'
+        ]
+      };
+
+      service.getDetails(request, function (placeDetails, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          // 詳細情報を含む情報ウィンドウを作成
+          infoWindow.setContent(formatPlaceDetails(placeDetails, placeLoc));
+          infoWindow.open(map, marker);
+        }
+      });
+    });
+  }
+
+  // PlaceDetailsを整形する関数
+  function formatPlaceDetails(placeDetails, placeLoc) {
+    let content = `<strong>${placeDetails.name}</strong><br>`;
+    content += `住所: ${placeDetails.formatted_address}<br>`;
+    content += `電話番号: ${placeDetails.formatted_phone_number}<br>`;
+
+    if (placeDetails.website) {
+      content += `ウェブサイト: <a href="${placeDetails.website}" target="_blank">${placeDetails.website}</a><br>`;
+    }
+
+    if (placeDetails.rating) {
+      content += `評価: ${placeDetails.rating}/5<br>`;
+    }
+
+    if (placeDetails.opening_hours) {
+      content += '営業時間:<br>';
+      content += '<ul>';
+      placeDetails.opening_hours.weekday_text.forEach((weekdayText) => {
+        content += `<li>${weekdayText}</li>`;
+      });
+      content += '</ul>';
+    }
+
+    // 写真が存在する場合のみ処理
+    if (placeDetails.photos && placeDetails.photos.length > 0) {
+      content += '<br>写真:<br>';
+      content += '<div>';
+
+      // １枚目の画像だけを取得
+      const firstPhoto = placeDetails.photos[0];
+      const imageUrl = firstPhoto.getUrl({
+        maxWidth: 200,
+        maxHeight: 200
+      });
+      content += `<img src="${imageUrl}" alt="Place Photo"><br>`;
+
+      content += '</div>';
+    }
+
+    // 追加ボタンを追加
+    content +=
+      `<button onclick="addPostFromInfoWindow(${placeLoc.lat()}, ${placeLoc.lng()}, '${placeDetails.name}')">追加</button>`;
+
+    return content;
+  }
+
+  // インフォウィンドウ内から追加ボタンを押したときにリストに追加
+  function addPostFromInfoWindow(lat, lng, location) {
+    const li = document.createElement('li');
+    li.textContent = location;
+    li.className = "list-group-item";
+    li.setAttribute("data-lat", lat);
+    li.setAttribute("data-lng", lng);
+
+    const routeList = document.getElementById('route-list');
+    routeList.appendChild(li);
+
+    infoWindow.close();
+  }
 
   // ルートを検索
   function search() {
-
     const points = $('#route-list li');
-
-    // 2つ以上の地点が選択された場合
     if (points.length >= 2) {
       let origin;
       let destination;
@@ -273,10 +367,8 @@
         }
       }
 
-      // 選択された移動方法を取得
-      const selectedTravelMode = travelModeSelector.value;
+      const selectedTravelMode = $('#travel-mode-selector').val();
 
-      // ルート検索のリクエストを作成
       const request = {
         origin: origin,
         destination: destination,
@@ -284,19 +376,24 @@
         travelMode: google.maps.TravelMode[selectedTravelMode],
       };
 
-      // ルートサービスのリクエスト
+      if (directionsRenderer) {
+        directionsRenderer.setMap(null); // 既存のルートをクリア
+      }
+
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: true,
+        panel: document.getElementById('directions-panel'),
+        polylineOptions: {
+          strokeColor: '#00ffdd',
+          strokeOpacity: 1,
+          strokeWeight: 5
+        }
+      });
+
       new google.maps.DirectionsService().route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-          new google.maps.DirectionsRenderer({
-            map: map,
-            suppressMarkers: true,
-            panel: document.getElementById('directions-panel'),
-            polylineOptions: {
-              strokeColor: '#00ffdd',
-              strokeOpacity: 1,
-              strokeWeight: 5
-            }
-          }).setDirections(response);
+          directionsRenderer.setDirections(response);
         } else {
           alert('ルートを見つけることができませんでした: ' + status);
         }
@@ -305,22 +402,38 @@
       alert('2つ以上の地点を追加してください。');
     }
   }
+
+  // 検索結果とリストをリセット
+  function resetRoute() {
+    if (directionsRenderer) {
+      directionsRenderer.setMap(null); // ルートをクリア
+    }
+
+    const routeList = document.getElementById('route-list');
+    routeList.innerHTML = ''; // リストをクリア
+
+    const directionsPanel = document.getElementById('directions-panel');
+    directionsPanel.innerHTML = ''; // 検索結果をクリア
+  }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&callback=initMap"></script>
+
+<script async
+  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&libraries=places&callback=initMap">
+</script>
 
 <script>
-$(document).ready(function () {
-  $('.main-slider').slick({
-    slidesToShow: 1,
-    asNavFor: '.thumbnail-slider',
-    arrows: false,
-  });
+  $(document).ready(function () {
+    $('.main-slider').slick({
+      slidesToShow: 1,
+      asNavFor: '.thumbnail-slider',
+      arrows: false,
+    });
 
-  $('.thumbnail-slider').slick({
-    slidesToShow: 9,
-    asNavFor: '.main-slider',
-    focusOnSelect: true,
-  });
+    $('.thumbnail-slider').slick({
+      slidesToShow: 9,
+      asNavFor: '.main-slider',
+      focusOnSelect: true,
+    });
 
-});
+  });
 </script>
