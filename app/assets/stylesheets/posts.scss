@@ -121,16 +121,90 @@ a:hover {
   width: auto;
 }
 
+// 天気
+.daily-forecasts-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.daily-forecast {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.forecast-entries {
+  display: flex;
+}
+
 // マップ
 #map_index {
-  height: 400px;
-  width: 380px;
+  height: 300px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#travel-mode-selector {
+  margin-top: 10px;
+}
+
+.map-controls {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.reset-button {
+  margin-right: 10px;
+}
+
+#current-location-button,
+#btn-search {
+  font-size: 14px;
+}
+
+.map-route {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.list-group {
+  margin-top: 10px;
+}
+
+#directions-panel {
+  margin-top: 20px;
+}
+
+// コメント
+// #comment-textarea {
+//   resize: none;
+//   width: 100%;
+// }
+
+.comment-count {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.comments-index {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.comment-delete {
+  margin-left: auto;
+  justify-content: end;
 }
 
 // ページネーション
 .pagination {
   justify-content: center;
-  margin: 30px 30px;
+  margin-top: 20px;
 }
 
 // 投稿編集
@@ -143,17 +217,6 @@ a:hover {
   background-blend-mode: lighten;
   background-size: 100% 100%;
   overflow: auto;
-}
-
-// コメント機能
-.comments-index {
-  background-color: #fff;
-  border: 1px #000 solid;
-}
-
-.comment-delete {
-  margin-left: auto;
-  justify-content: end;
 }
 
 @media screen and (max-width:575px) {
@@ -171,20 +234,7 @@ a:hover {
 // スマホ
 @media screen and (max-width: 717px) {
 
-  // 投稿詳細
-  .comments {
-    max-width: 80%;
-    display: inline-block;
-  }
-
-  .map-comments {
-    max-width: 400px;
-  }
-
-  textarea {
-    max-width: 100%;
-  }
-
+  // // 投稿詳細
   .cover-new,
   .cover-index,
   .cover-show,
@@ -192,23 +242,4 @@ a:hover {
     height: calc(100% + 66px);
   }
 
-  .main-slider {
-    width: auto;
-    max-width: 300px;
-  }
-  
-  .thumbnail-slider {
-    height: auto;
-    width: 200px;
-  }
-  
-  .slick-slider {
-    margin: 0 auto;
-    width: auto;
-  }
-
-  .slick-list {
-    max-width: 390px;
-  }
-  
 }

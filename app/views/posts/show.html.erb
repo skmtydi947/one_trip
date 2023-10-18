@@ -1,9 +1,8 @@
 <div class="cover-show">
-  <div class="container justify-content-center">
-
-    <div class="row justify-content-center">
+  <div class="container-fluid m-0">
+    <div class="title row justify-content-center">
       <h1 class="font-weight-normal mt-5 mb-5">
-        <p class="caption"><%= @post.location %>
+        <p class="caption"><%= @post.location %></p>
       </h1>
     </div>
 
@@ -16,93 +15,128 @@
     </div>
     <% end %>
 
-    <div class="d-flex">
+    <div class="username col-md-4">
+      <p class="caption">
+        <%= link_to user_path(@post.user) do %>
+        <%= attachment_image_tag @post.user, :profile_image, format: 'jpeg', fallback: "logo.png", size: '70x70', class: "rounded-circle" %>
+        <%= @post.user.name %>
+        <% end %>
+      </p>
+    </div>
 
-      <div class="row justify-content-center d-block">
-        <p class="caption justify-content-start">
-          <%= link_to user_path(@post.user) do %>
-          <%= attachment_image_tag @post.user, :profile_image, format: 'jpeg', fallback: "logo.png", size: '70x70', class: "rounded-circle" %>
-          <%= @post.user.name %>
-          <% end %>
-        </p>
-
-        <div class="d-flex justify-content-end mb-3 mr-1">
-          <% if @post.user == current_user %>
-          <%= link_to '編集する', edit_post_path(@post.id), class: "btn btn-info mr-3" %>
-          <%= link_to '削除する', post_path(@post.id),method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn btn-danger mr-3" %>
-          <% end %>
-          <%= link_to '投稿一覧ページへ', posts_path, class: "btn btn-dark" %>
-        </div>
-
+    <div class="images-weather row">
+      <div class="images-fovorite col-md-6">
         <div class="main-slider mb-3">
           <% @post.post_images.each do |image| %>
           <%= attachment_image_tag image, :image, format: 'jpeg', size: '300x300' %>
           <% end %>
         </div>
-
         <div class="thumbnail-slider">
           <% @post.post_images.each do |image| %>
           <%= attachment_image_tag image, :image, format: 'jpeg', size: '100x100', class: 'thumbnail mr-1' %>
           <% end %>
         </div>
-
         <div id="favorite_btn_<%= @post.id %>">
           <%= render 'favorites/favorite', post: @post %>
         </div>
+      </div>
 
-        <div class="text ml-1">
-          <h2>感想</h2>
-          <p id="text"><%= @post.text %></p>
+      <div class="text-weather col-md-6">
+        <h2>感想</h2>
+        <p id="text"><%= @post.text %></p>
+        <% if @weather_data.present? %>
+        <h2>5日間の天気予報</h2>
+        <% daily_forecasts = @weather_data['list'].group_by { |forecast| Time.at(forecast['dt']).strftime('%Y-%m-%d') } %>
+        <div class="daily-forecasts-container">
+          <% daily_forecasts.each do |date, forecasts| %>
+          <div class="daily-forecast">
+            <div class="forecast-entries">
+              <% forecasts.each do |forecast| %>
+              <% if Time.at(forecast['dt']).hour == 12 %>
+              <div class="forecast-entry">
+                <p><strong><%= Time.at(forecast['dt']).strftime('%m-%d %H:%M') %></strong></p>
+                <p>気温: <%= forecast['main']['temp'].to_i %>度</p>
+                <p>天気: <%= forecast['weather'][0]['description'] %></p>
+                <% if forecast['rain'].present? && forecast['rain']['3h'].present? %>
+                <p>降水確率: <%= forecast['rain']['3h'] %>mm</p>
+                <% else %>
+                <p>降水確率: 0mm</p>
+                <% end %>
+              </div>
+              <% end %>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
         </div>
+        <% else %>
+        <p>天気情報が取得できませんでした。</p>
+        <% end %>
+      </div>
+    </div>
 
-        <div class="map-comments row">
-          <div class="map col ml-1 mb-3">
-            <div id='map_index'></div>
-            <select id="travel-mode-selector">
+    <div class="map-comments row justify-content-center">
+      <div class="map col-md-6 mb-3">
+        <div id="map_index"></div>
+        <div class="map-search mx-md-3 mt-md-2 text-center">
+          <div class="d-md-flex flex-wrap justify-content-center">
+            <select id="travel-mode-selector" class="form-control mb-2 mb-md-2">
               <option value="WALKING">徒歩</option>
               <option value="DRIVING">車</option>
               <%# <option value="TRANSIT">公共交通機関</option> %>
             </select>
-            <button class="mt-2 ml-3" onclick="resetRoute()">検索結果とリストをリセット</button>
-            <div class="map-search mx-3 mt-2">
-              <button id="current-location-button" class="btn btn-primary">現在地を取得する</button>
-              <%= button_tag "ルートを検索する", id: "btn-search", class: "btn btn-primary ml-3", onclick: "search()" %>
-            </div>
-            <div class="map-route">
-              < ルート検索リスト>
-                <ul id="route-list" class="list-group">
-            </div>
-            < 各地点間の距離・時間>
-              <div id='directions-panel'>
-                <ul id="display-list" class="display-group">
-              </div>
+            <%= button_tag "ルートを検索する", id: "btn-search", class: "btn btn-primary ml-md-3", onclick: "search()" %>
+            <button id="current-location-button" class="btn btn-primary ml-md-3 m-md-1">現在地を取得する</button>
+            <button class="btn btn-secondary ml-md-3 m-md-1" onclick="resetRoute()">検索結果をリセット</button>
           </div>
-
-          <div class="comments ml-5 col-xs-6">
-            <%= form_with(model:[@post, @comment], local: true) do |f| %>
-            <%= f.text_area :comment, :size=>"60x3",placeholder: "コメントする" %>
-            <%= f.submit "送信する", class: "btn btn-success mb-4" %>
-            <% end %>
-            <p>コメント件数：<%= @comments.count %></p>
-            <% @comments.each do |comment| %>
-            <div class="row comments-index mb-2">
-              <%= comment.user.name %>
-              <%= comment.created_at.strftime('%Y/%m/%d') %><br>
-              <%= comment.comment %>
-              <% if comment.user == current_user %>
-              <div class="comment-delete mt-4">
-                <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete, class: "btn-sm btn-danger" %>
-                <% end %>
-              </div>
-            </div>
-            <% end %>
-            <%= paginate @comments, theme: 'twitter-bootstrap-4' %>
+        </div>
+        <div class="map-route mt-3">
+          <h5>ルート検索リスト</h5>
+          <ul id="route-list" class="list-group"></ul>
+        </div>
+        <div class="mt-3">
+          <h5>各地点間の距離・時間</h5>
+          <div id="directions-panel">
+            <ul id="display-list" class="list-group"></ul>
           </div>
         </div>
       </div>
+
+      <div class="comments col-md-6 mb-3">
+        <div class="comments-form row mb-3">
+          <%= form_with(model:[@post, @comment], local: true, html: { class: 'col-md-12' }) do |f| %>
+          <%= f.text_area :comment, :size => "60x3", placeholder: "コメントする", class: 'form-control mb-2' %>
+          <%= f.submit "送信する", class: "btn btn-success" %>
+          <% end %>
+        </div>
+        <p>コメント件数：<%= @comments.count %></p>
+        <% @comments.each do |comment| %>
+        <div class="d-flex comments-index mb-2">
+          <%= comment.user.name %>
+          <%= comment.created_at.strftime('%Y/%m/%d') %><br>
+          <%= comment.comment %>
+          <% if comment.user == current_user %>
+          <div class="comment-delete mt-4">
+            <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete, class: "btn-sm btn-danger" %>
+          </div>
+          <% end %>
+        </div>
+        <% end %>
+        <%= paginate @comments, theme: 'twitter-bootstrap-4' %>
+      </div>
+    </div>
+
+    <div class="eddel-bt d-flex justify-content-end mb-3">
+      <% if @post.user == current_user %>
+      <%= link_to '投稿編集', edit_post_path(@post.id), class: "btn btn-info mr-3" %>
+      <%= link_to '投稿削除', post_path(@post.id), method: :delete, "data-confirm"=>"本当に消しますか？", class: "btn btn-danger mr-3" %>
+      <% end %>
     </div>
   </div>
 </div>
+</div>
+
+
 
 <script>
   // document.addEventListener('DOMContentLoaded', function () {
@@ -259,7 +293,7 @@
   function createMarker(place) {
     const placeLoc = place.geometry.location;
 
-const customIconUrl = '<%= asset_path("cafe32.png") %>';
+    const customIconUrl = '<%= asset_path("cafe32.png") %>';
     const marker = new google.maps.Marker({
       map: map,
       position: placeLoc,
@@ -417,9 +451,9 @@ const customIconUrl = '<%= asset_path("cafe32.png") %>';
   }
 </script>
 
-<script async
+<%# <script async
   src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&libraries=places&callback=initMap">
-</script>
+</script> %>
 
 <script>
   $(document).ready(function () {
