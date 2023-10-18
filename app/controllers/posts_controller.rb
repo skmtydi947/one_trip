@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  require 'httparty'
 
   def new
     @post = Post.new  
@@ -20,6 +21,7 @@ class PostsController < ApplicationController
     gon.post = @post
     @comment = Comment.new
     @comments = @post.comments.page(params[:page]).per(7).reverse_order
+    @weather_data = get_weather_forecast(@post.latitude, @post.longitude)
   end
 
   def index
@@ -49,7 +51,15 @@ class PostsController < ApplicationController
   private
   def post_params
     params.require(:post).permit(:location, :text, :address, :latitude, :longitude, post_images_images: []).merge(user_id: current_user.id)
-
   end
 
+  def get_weather_forecast(latitude, longitude)
+    api_key = ENV['OPENWEATHERMAP_API_KEY']
+    api_url = "https://api.openweathermap.org/data/2.5/forecast?lat=#{latitude}&lon=#{longitude}&appid=#{api_key}&lang=ja&units=metric"
+
+    response = HTTParty.get(api_url)
+    weather_data = JSON.parse(response.body)
+
+    return weather_data
+  end
 end
