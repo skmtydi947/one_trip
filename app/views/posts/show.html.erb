@@ -57,6 +57,7 @@
                 <p><strong><%= Time.at(forecast['dt']).strftime('%m-%d %H:%M') %></strong></p>
                 <p>気温: <%= forecast['main']['temp'].to_i %>度</p>
                 <p>天気: <%= forecast['weather'][0]['description'] %></p>
+                <img src="https://openweathermap.org/img/wn/<%= forecast['weather'][0]['icon'].gsub('n', 'd') %>@2x.png" alt="Weather Icon">
                 <% if forecast['rain'].present? && forecast['rain']['3h'].present? %>
                 <p>降水確率: <%= forecast['rain']['3h'] %>mm</p>
                 <% else %>
@@ -195,7 +196,7 @@
       });
     }
 
-    // 周辺の観光地とホテルを検索
+    // 周辺のカフェを検索
     searchPlaces({
       lat: spot.latitude,
       lng: spot.longitude
@@ -231,8 +232,9 @@
           infoWindow.open(map, currentLocationMarker);
         });
 
-        // 周辺の観光地とホテルを検索
         map.setCenter(currentLatLng);
+
+        // 周辺のカフェを検索
         searchPlaces(currentLatLng);
       });
     } else {
@@ -240,33 +242,7 @@
     }
   }
 
-  // 検索リストにスポットを追加
-  function addPost(number) {
-    const li = document.createElement('li');
-    if (number === -1) {
-      li.textContent = "現在置";
-    } else {
-      li.textContent = spots_location[number];
-    }
-
-    li.className = "list-group-item";
-
-    // li要素にdata-lat,lngのデータ属性を追加
-    if (number === -1) {
-      li.setAttribute("data-lat", currentLocationMarker.getPosition().lat());
-      li.setAttribute("data-lng", currentLocationMarker.getPosition().lng());
-    } else {
-      li.setAttribute("data-lat", spots_lat[number]);
-      li.setAttribute("data-lng", spots_lng[number]);
-    }
-
-    const routeList = document.getElementById('route-list');
-    routeList.appendChild(li);
-
-    infoWindow.close();
-  }
-
-  // Places APIを使用して周辺の観光地とホテルを検索
+  // Places APIを使用して周辺カフェを検索
   function searchPlaces(location) {
     service = new google.maps.places.PlacesService(map);
 
@@ -300,8 +276,8 @@
       icon: customIconUrl
     });
 
+    // Places APIの詳細情報を取得
     google.maps.event.addListener(marker, 'click', function () {
-      // Places APIの詳細情報を取得
       const request = {
         placeId: place.place_id,
         fields: ['name', 'formatted_address', 'formatted_phone_number', 'website', 'rating', 'opening_hours',
@@ -372,6 +348,32 @@
     li.className = "list-group-item";
     li.setAttribute("data-lat", lat);
     li.setAttribute("data-lng", lng);
+
+    const routeList = document.getElementById('route-list');
+    routeList.appendChild(li);
+
+    infoWindow.close();
+  }
+
+  // 検索リストにスポットを追加
+  function addPost(number) {
+    const li = document.createElement('li');
+    if (number === -1) {
+      li.textContent = "現在置";
+    } else {
+      li.textContent = spots_location[number];
+    }
+
+    li.className = "list-group-item";
+
+    // li要素にdata-lat,lngのデータ属性を追加
+    if (number === -1) {
+      li.setAttribute("data-lat", currentLocationMarker.getPosition().lat());
+      li.setAttribute("data-lng", currentLocationMarker.getPosition().lng());
+    } else {
+      li.setAttribute("data-lat", spots_lat[number]);
+      li.setAttribute("data-lng", spots_lng[number]);
+    }
 
     const routeList = document.getElementById('route-list');
     routeList.appendChild(li);
