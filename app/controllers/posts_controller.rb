@@ -55,13 +55,8 @@ class PostsController < ApplicationController
 
   def get_weather_forecast(latitude, longitude)
     api_key = ENV['OPENWEATHERMAP_API_KEY']
-    logger.info "===================================================api_key: #{api_key}==================================================="
     api_url = "https://api.openweathermap.org/data/2.5/forecast?lat=#{latitude}&lon=#{longitude}&appid=#{api_key}&lang=ja&units=metric"
-    logger.info "===================================================api_url: #{api_url}==================================================="
-
     response = HTTParty.get(api_url)
-    logger.info "===================================================response: #{response}==================================================="
-
     weather_data = JSON.parse(response.body)
 
     return weather_data
