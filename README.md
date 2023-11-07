@@ -42,7 +42,7 @@ rails db:migrate
 # 利用方法
 ・トップページからゲストログインをクリックすると投稿一覧画面に遷移します。
 
-![login](https://github.com/skmtydi947/one_trip/assets/85802578/12ae5b07-8c1e-4d4d-a0b2-78441ade0774)
+![login](https://github.com/skmtydi947/one_trip/assets/85802578/6ef00150-2440-41e3-a080-304e82770619)
 
 ・ヘッダーの投稿するをクリックすると新規投稿画面へ遷移します。
 
@@ -50,28 +50,33 @@ rails db:migrate
 
 ・投稿詳細ページへ遷移します。
 
-![post](https://github.com/skmtydi947/one_trip/assets/85802578/17f0e26a-6d88-41c0-94f9-7b9df6f3c8f3)
+![post](https://github.com/skmtydi947/one_trip/assets/85802578/ec90bfb9-eef4-44c5-b16a-da32d779827a)
 
 ・投稿詳細画面にていいねをすることができます。
 
-![like](https://github.com/skmtydi947/one_trip/assets/85802578/ff56b2a9-69ba-4f10-90c7-485136bea1cd)
+![like](https://github.com/skmtydi947/one_trip/assets/85802578/493b4cf6-5e86-46c7-952d-04e911007a18)
 
 ・投稿詳細画面のMAPピンをクリックすると旅行先名が表示されます。
 
 ・追加をクリックすると、< ルート検索リスト >に追加されルート検索をクリックすると２点間の距離と時間が表示されます。（複数選択可）
+
+・周辺情報（カフェ）もウィンドウから追加ボタンを押すことでリストに追加しルート検索可能です。
+
+・現在地の取得も可能となっています。
+
 ・マップには経路が描写されます。
 
-![route](https://github.com/skmtydi947/one_trip/assets/85802578/25326ad5-abda-4d43-ad2b-ae6f4b62b105)
+![route](https://github.com/skmtydi947/one_trip/assets/85802578/35204cd8-23b1-4785-ba5d-e5cc998f4ccf)
 
 ・メッセージを入力して送信するをクリックするとコメントできます。
 
 ・削除をクリックすることで削除できます。
 
-![comment](https://github.com/skmtydi947/one_trip/assets/85802578/4c58c678-2ff3-4dcf-971e-d45ca87e89c2)
+![comment](https://github.com/skmtydi947/one_trip/assets/85802578/768e0b53-e23f-43ed-a3c2-b647dd585907)
 
 ・ユーザー詳細ページでユーザーのフォローができます。
 
-![follow](https://github.com/skmtydi947/one_trip/assets/85802578/95466907-0e00-4d8a-8e9a-5a43f749d20f)
+![follow](https://github.com/skmtydi947/one_trip/assets/85802578/17abb622-9072-4761-97ec-eaa96e76ffd2)
 
 # 制作背景
 ## 開発の意図
@@ -89,7 +94,7 @@ rails db:migrate
 # 実装予定の機能
 - いいねした投稿のみをマップに表示させる
 - 投稿一覧画面に検索フォームを実装
-- ルート検索機能の結果を移動手段によって切り替える
+- ルート検索機能の結果を移動手段によって切り替える（実装済）
 
 # 機能一覧
 |機能|概要|
