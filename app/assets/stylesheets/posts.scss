@@ -100,9 +100,11 @@ a:hover {
   max-height: 400px;
   overflow-x: hidden;
   overflow-y: auto;
-  border: 1px solid #ccc;
   padding: 10px;
   word-wrap: break-word;
+}
+
+.directions-panel-bg {
   background-color: white;
 }
 
