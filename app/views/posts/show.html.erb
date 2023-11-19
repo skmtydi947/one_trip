@@ -427,6 +427,9 @@
         }
       });
 
+      const directionsPanel = document.getElementById('directions-panel');
+      directionsPanel.className = 'directions-panel-bg';
+
       new google.maps.DirectionsService().route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           directionsRenderer.setDirections(response);
