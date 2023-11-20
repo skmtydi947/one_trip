@@ -58,10 +58,10 @@
                 <p>気温: <%= forecast['main']['temp'].to_i %>度</p>
                 <p>天気: <%= forecast['weather'][0]['description'] %></p>
                 <img src="https://openweathermap.org/img/wn/<%= forecast['weather'][0]['icon'].gsub('n', 'd') %>@2x.png" alt="Weather Icon">
-                <% if forecast['rain'].present? && forecast['rain']['3h'].present? %>
-                <p>降水確率: <%= forecast['rain']['3h'] %>mm</p>
+                <% if forecast['pop'].present? %>
+                <p>降水確率: <%= (forecast['pop'] * 100).round(-1) %>%</p>
                 <% else %>
-                <p>降水確率: 0mm</p>
+                <p>降水確率: 0%</p>
                 <% end %>
               </div>
               <% end %>
