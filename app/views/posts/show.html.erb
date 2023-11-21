@@ -57,7 +57,8 @@
                 <p><strong><%= Time.at(forecast['dt']).strftime('%m-%d %H:%M') %></strong></p>
                 <p>気温: <%= forecast['main']['temp'].to_i %>度</p>
                 <p>天気: <%= forecast['weather'][0]['description'] %></p>
-                <img src="https://openweathermap.org/img/wn/<%= forecast['weather'][0]['icon'].gsub('n', 'd') %>@2x.png" alt="Weather Icon">
+                <img src="https://openweathermap.org/img/wn/<%= forecast['weather'][0]['icon'].gsub('n', 'd') %>@2x.png"
+                  alt="Weather Icon">
                 <% if forecast['pop'].present? %>
                 <p>降水確率: <%= (forecast['pop'] * 100).round(-1) %>%</p>
                 <% else %>
@@ -297,7 +298,12 @@
 
   // PlaceDetailsを整形する関数
   function formatPlaceDetails(placeDetails, placeLoc) {
-    let content = `<strong>${placeDetails.name}</strong><br>`;
+    let content = '<div style="text-align: center;">';
+    content += '<div style="display: flex; align-items: center;">';
+    content += '<strong style="margin: auto;">' + placeDetails.name + '</strong><br>';
+    content +=
+      `<button onclick="addPostFromInfoWindow(${placeLoc.lat()}, ${placeLoc.lng()}, '${placeDetails.name}')">追加</button>`;
+    content += '</div>';
     content += `住所: ${placeDetails.formatted_address}<br>`;
     content += `電話番号: ${placeDetails.formatted_phone_number}<br>`;
 
@@ -310,17 +316,18 @@
     }
 
     if (placeDetails.opening_hours) {
+      content += '<div style="list-style: none;">';
       content += '営業時間:<br>';
-      content += '<ul>';
+      content += '<ul style="padding: 0; margin: 0;">';
       placeDetails.opening_hours.weekday_text.forEach((weekdayText) => {
         content += `<li>${weekdayText}</li>`;
       });
       content += '</ul>';
+      content += '</div>';
     }
 
     // 写真が存在する場合のみ処理
     if (placeDetails.photos && placeDetails.photos.length > 0) {
-      content += '<br>写真:<br>';
       content += '<div>';
 
       // １枚目の画像だけを取得
@@ -334,9 +341,7 @@
       content += '</div>';
     }
 
-    // 追加ボタンを追加
-    content +=
-      `<button onclick="addPostFromInfoWindow(${placeLoc.lat()}, ${placeLoc.lng()}, '${placeDetails.name}')">追加</button>`;
+    content += '</div>';
 
     return content;
   }
