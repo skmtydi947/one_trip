@@ -44,36 +44,6 @@
       <div class="text-weather col-md-6">
         <h2>感想</h2>
         <p id="text"><%= @post.text %></p>
-        <% if @weather_data.present? %>
-        <h2>5日間の天気予報</h2>
-        <% daily_forecasts = @weather_data['list'].group_by { |forecast| Time.at(forecast['dt']).strftime('%Y-%m-%d') } %>
-        <div class="daily-forecasts-container">
-          <% daily_forecasts.each do |date, forecasts| %>
-          <div class="daily-forecast">
-            <div class="forecast-entries">
-              <% forecasts.each do |forecast| %>
-              <% if Time.at(forecast['dt']).hour == 12 %>
-              <div class="forecast-entry">
-                <p><strong><%= Time.at(forecast['dt']).strftime('%m-%d %H:%M') %></strong></p>
-                <p>気温: <%= forecast['main']['temp'].to_i %>度</p>
-                <p>天気: <%= forecast['weather'][0]['description'] %></p>
-                <img src="https://openweathermap.org/img/wn/<%= forecast['weather'][0]['icon'].gsub('n', 'd') %>@2x.png"
-                  alt="Weather Icon">
-                <% if forecast['pop'].present? %>
-                <p>降水確率: <%= (forecast['pop'] * 100).round(-1) %>%</p>
-                <% else %>
-                <p>降水確率: 0%</p>
-                <% end %>
-              </div>
-              <% end %>
-              <% end %>
-            </div>
-          </div>
-          <% end %>
-        </div>
-        <% else %>
-        <p>天気情報が取得できませんでした。</p>
-        <% end %>
       </div>
     </div>
 
