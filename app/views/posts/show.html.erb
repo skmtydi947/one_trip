@@ -113,7 +113,7 @@
           <%= f.submit "送信する", class: "btn btn-success" %>
           <% end %>
         </div>
-        <p>コメント件数：<%= @comments.count %></p>
+        <p>コメント件数：<%= @comments.size %></p>
         <% @comments.each do |comment| %>
         <div class="d-flex comments-index mb-2">
           <%= comment.user.name %>

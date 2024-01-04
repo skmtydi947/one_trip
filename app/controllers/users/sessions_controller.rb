@@ -3,6 +3,6 @@ class Users::SessionsController < Devise::SessionsController
     user = User.guest
     sign_in user
     redirect_to posts_path
-    flash[:notice] = "ゲストユーザとしてログインしました。"
+    flash[:notice] = 'ゲストユーザとしてログインしました。'
   end
 end

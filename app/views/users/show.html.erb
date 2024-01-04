@@ -38,8 +38,8 @@
           <%= post.user.name %>
         </p>
         <div class="count">
-          <p class="caption"><%= "♥#{post.favorites.count}" %></p>
-          <p class="caption"><i class="fa-regular fa-comment"></i><%= "#{post.comments.count}" %></p>
+          <p class="caption"><%= "♥#{post.favorites.size}" %></p>
+          <p class="caption"><i class="fa-regular fa-comment"></i><%= "#{post.comments.size}" %></p>
         </div>
         <% end %>
       </div>

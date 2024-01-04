@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   require 'httparty'
 
   def new
-    @post = Post.new  
+    @post = Post.new
   end
 
   def create
@@ -25,7 +25,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page]).reverse_order
+    @posts = Post.page(params[:page]).includes(:favorites, :user, :post_images, :comments).reverse_order
   end
 
   def edit
@@ -49,6 +49,7 @@ class PostsController < ApplicationController
   end
 
   private
+
   def post_params
     params.require(:post).permit(:location, :text, :address, :latitude, :longitude, post_images_images: []).merge(user_id: current_user.id)
   end
@@ -58,7 +59,6 @@ class PostsController < ApplicationController
     api_url = "https://api.openweathermap.org/data/2.5/forecast?lat=#{latitude}&lon=#{longitude}&appid=#{api_key}&lang=ja&units=metric"
     response = HTTParty.get(api_url)
     weather_data = JSON.parse(response.body)
-
     return weather_data
   end
 end
