@@ -4,7 +4,7 @@
       <h1 class="font-weight-normal mt-3">新規投稿</h1>
     </div>
     <div class="row justify-content-center">
-      <%= form_with model: @post, url:'/posts', local:true do |f| %>
+      <%= form_with model: @post, local:true do |f| %>
         <% if @post.errors.any? %>
           <div class="errors text-white bg-danger mb-3">
             <ul>

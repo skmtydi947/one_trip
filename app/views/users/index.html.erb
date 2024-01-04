@@ -12,7 +12,7 @@
         <%= attachment_image_tag user, :profile_image, size: '80x80', fallback: "logo.png", class: "profile-img ml-1" %>
         <h4 class="ml-2"><%= user.profile %></h4>
         </div>
-        <p class="caption ml-3"><%= "#{user.posts.count} 投稿" %></p>
+        <p class="caption ml-3"><%= "#{user.posts.size} 投稿" %></p>
         <% end %>
       </div>
       <% end %>
